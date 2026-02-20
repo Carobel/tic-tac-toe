@@ -1,1 +1,3 @@
-Tic Tac Toe game using JavaScript. The goal in this exercise is to use as little global code as possible. I practice with concepts of scope, closure, factory functions and module pattern (IIFEs).
+Tic Tac Toe game using JavaScript, created for The Odin Project Javascript course: https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe
+
+The goal in this exercise is to use as little global code as possible. This is done my making things as modular as possible. I practice with concepts of scope, closure, factory functions and Immediately Invoked Function Expressions (IIFEs). The back-end logic and front-end is also seperated as much as possible.
