@@ -1,0 +1,1 @@
+Tic Tac Toe game using JavaScript. The goal in this exercise is to use as little global code as possible. I practice with concepts of scope, closure, factory functions and module pattern (IIFEs).
