@@ -1,6 +1,11 @@
 // create gameboard prototype: factory function inside IIFE/module because it is only required once
-const gameboard = (() => {
-    const board = [['.','.','.'],['.','.','.'],['.','.','.']];
+const Gameboard = (() => {
+    const board = ['.','.','.','.','.','.','.','.','.'];
+    const winLines = [ 
+        [0,1,2],[3,4,5],[6,7,8], // rows
+        [0,3,6],[1,4,7],[2,5,8], // columns
+        [0,4,8], [2,4,6]// diagonals
+        ];
 
     const getBoard = () => board;
 
@@ -10,14 +15,23 @@ const gameboard = (() => {
         }
     };
 
-    const setMark = (row, col, player) => {
+    const setField = (row, col, player) => {
         board[row][col] = player.mark;
     };
 
+    const isWinningLine = (arr) => {
+        return arr.every(field => field[0] !== '' && field === arr[0]) // returns true if a given row/column/diagonal contains all X'es or O's
+    };
+
+    const isGameOver = () => {
+        const allLines = [];
+    };
+
     const clearBoard = () => {
-        board = [['.','.','.'],['.','.','.'],['.','.','.']];
-    }
-    return { getBoard, printBoard, setMark, clearBoard, }; // by not returning the variable board, it is kept private
+        board = ['.','.','.','.','.','.','.','.','.'];
+    };
+
+    return { getBoard, printBoard, setField, clearBoard, }; // by not returning the variable board, it is kept private
 })();
 
 // create player prototype
@@ -25,27 +39,32 @@ function createPlayer(name, mark) {
     return { name, mark };
 }
 
-// create game controller (inside IIFE/module)
-const gameController = (() => {
+// create game controller (factory function)
+const GameController = (() => {
     const player1 = createPlayer('you','X');
     const player2 = createPlayer('computer', 'O'); 
 
-    const TURNS = { player1: true, player2: false};
+    let player1Turn = true;
 
-    currentTurn = true;
-
-    const toggleTurn = (currentTurn) => !currentTurn;
-
-    const playRound = () => {
-        console.log({currentTurn});
-        toggleTurn(currentTurn); 
+    const toggleTurn = () => {
+        player1Turn = !player1Turn;
     }
 
-    const checkWinner = (board) => {
+    const humanTurn = () => {
+        console.log('Current turn:' + player1Turn);
+    }
+
+    const isGameOver = (board) => { //returns true if game is over
         console.log('');
     }
 
-    playRound();
-    playRound();
+    const init = () => {
+        while (!isGameOver(board)) {
+            humanTurn();
+            toggleTurn();
+        }
+    }
+
+    return { init, };
 })();
 
