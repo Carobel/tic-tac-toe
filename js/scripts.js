@@ -6,7 +6,7 @@ const Gameboard = (() => {
         [0,3,6],[1,4,7],[2,5,8], // columns
         [0,4,8], [2,4,6]// diagonals
         ];
-
+    
     const getBoard = () => board;
 
     const printBoard = () => {
@@ -14,24 +14,27 @@ const Gameboard = (() => {
             console.log(board[i].join(''));
         }
     };
-
-    const setField = (row, col, player) => {
-        board[row][col] = player.mark;
+    
+    const setField = (field, player) => {
+        board[field] = player.mark;
     };
 
-    const isWinningLine = (arr) => {
+    const isWinningLine = (winLine) => {
         return arr.every(field => field[0] !== '' && field === arr[0]) // returns true if a given row/column/diagonal contains all X'es or O's
     };
 
     const isGameOver = () => {
-        const allLines = [];
+        const winLineVals = winLines.map(line => {
+            return line.map(coord => board[coord]);
+        });
+        console.log(winLineVals);
     };
 
     const clearBoard = () => {
         board = ['.','.','.','.','.','.','.','.','.'];
     };
 
-    return { getBoard, printBoard, setField, clearBoard, }; // by not returning the variable board, it is kept private
+    return { getBoard, printBoard, setField, clearBoard, isGameOver}; // by not returning the variable board, it is kept private
 })();
 
 // create player prototype
