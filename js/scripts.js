@@ -1,6 +1,6 @@
 // create gameboard prototype: factory function inside IIFE/module because it is only required once
 const Gameboard = (() => {
-    const board = ['.','.','.','.','.','.','.','.','.'];
+    const board = ['','','','','','','','',''];
     const winLines = [ 
         [0,1,2],[3,4,5],[6,7,8], // rows
         [0,3,6],[1,4,7],[2,5,8], // columns
@@ -20,18 +20,24 @@ const Gameboard = (() => {
     };
 
     const isWinningLine = (winLine) => {
-        return arr.every(field => field[0] !== '' && field === arr[0]) // returns true if a given row/column/diagonal contains all X'es or O's
+        return winLine.every(field => field !== '' && field === winLine[0]) // returns true if a given row/column/diagonal contains all X'es or O's
     };
 
     const isGameOver = () => {
         const winLineVals = winLines.map(line => {
             return line.map(coord => board[coord]);
         });
-        console.log(winLineVals);
+
+        for (const line of winLineVals) {
+            if(isWinningLine(line)) {
+                return line[0];
+            }
+        }
+        return false;
     };
 
     const clearBoard = () => {
-        board = ['.','.','.','.','.','.','.','.','.'];
+        board = ['','','','','','','','',''];
     };
 
     return { getBoard, printBoard, setField, clearBoard, isGameOver}; // by not returning the variable board, it is kept private
