@@ -1,6 +1,8 @@
 // create gameboard prototype: factory function inside IIFE/module because it is only required once
 const Gameboard = (() => {
-    const board = ['','','','','','','','',''];
+    let board = ['','','','','','','','',''];
+    
+    // these are all the combinations of fields that could lead to a win
     const winLines = [ 
         [0,1,2],[3,4,5],[6,7,8], // rows
         [0,3,6],[1,4,7],[2,5,8], // columns
@@ -10,13 +12,23 @@ const Gameboard = (() => {
     const getBoard = () => board;
 
     const printBoard = () => {
-        for (let i = 0; i < board.length; i++) {
-            console.log(board[i].join(''));
+        for (let i = 0; i <= 6; i+=3) {
+            let line = '';
+            for (let p = 0; p < 3; p++) {
+                let sign = (board[i+p]=='') ? '\xa0\xa0\xa0' : '\xa0'+board[i+p]+'\xa0';
+                line += sign;
+            }
+            console.log(line);
         }
     };
     
-    const setField = (field, player) => {
-        board[field] = player.mark;
+    // 
+    const setMark = (field, player) => {
+        if (board[field] === '') {
+            board[field] = player.mark;
+            return field;
+        }
+        return false;
     };
 
     const isWinningLine = (winLine) => {
@@ -40,7 +52,7 @@ const Gameboard = (() => {
         board = ['','','','','','','','',''];
     };
 
-    return { getBoard, printBoard, setField, clearBoard, isGameOver}; // by not returning the variable board, it is kept private
+    return { getBoard, printBoard, setMark, clearBoard, isGameOver}; // by not returning the variable board, it is kept private
 })();
 
 // create player prototype
